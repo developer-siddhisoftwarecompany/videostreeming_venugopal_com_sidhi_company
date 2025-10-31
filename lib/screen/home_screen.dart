@@ -5,6 +5,8 @@ import 'plus_screen.dart';
 import 'trending_section.dart';
 import 'my_library_screen.dart';
 import 'video_detail_screen.dart';
+import 'search_screen.dart';
+import 'all_categories_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,11 +64,13 @@ class _HomeScreenState extends State<HomeScreen> {
       'assets/sarkari1.png',
       'assets/sarkari2.png',
       'assets/sarkari3.png',
+      'assets/sarkari4.png',
     ];
 
     final youtubeList = [
       'assets/yt1.png',
       'assets/yt2.png',
+      'assets/yt3.png',
       'assets/yt3.png',
     ];
 
@@ -86,15 +90,29 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Search',
-                prefixIcon: const Icon(Icons.search, color: Colors.white54),
-                filled: true,
-                fillColor: Colors.white12,
-                border: OutlineInputBorder(
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SearchScreen()),
+                );
+              },
+              child: Container(
+                padding:
+                const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white12,
                   borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.search, color: Colors.white54),
+                    SizedBox(width: 12),
+                    Text(
+                      'Search',
+                      style: TextStyle(color: Colors.white54, fontSize: 16),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -120,6 +138,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const SarkariKamScreen(),
+                        ),
+                      );
+                    } else if (title == 'View All') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AllCategoriesScreen(),
                         ),
                       );
                     }
@@ -251,7 +276,14 @@ class SectionTitle extends StatelessWidget {
         ),
         if (viewAll)
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AllCategoriesScreen(),
+                ),
+              );
+            },
             child: const Text(
               "View All →",
               style: TextStyle(color: Colors.orange, fontSize: 14),

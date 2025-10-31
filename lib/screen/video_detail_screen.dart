@@ -29,196 +29,178 @@ class VideoDetailScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.bookmark_border, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            Image.asset(
+              mainVideoThumbnail,
               height: 250,
               width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(mainVideoThumbnail),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: Container(
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                  ),
-                  const Center(
-                    child: Icon(
-                      Icons.play_circle_fill,
-                      color: Colors.white,
-                      size: 70,
-                    ),
-                  ),
-                ],
-              ),
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                Text(
-                videoTitle,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
                   Text(
-                    videoDate,
-                    style:
-                    const TextStyle(color: Colors.white70, fontSize: 13),
+                    videoTitle,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        videoDate,
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 13),
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        '|',
+                        style:
+                        TextStyle(color: Colors.white70, fontSize: 13),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        videoDuration,
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 13),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildPlayButton(),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildShareButton(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    videoDescription,
+                    style: const TextStyle(
+                        color: Colors.white70, fontSize: 14, height: 1.5),
+                  ),
+                  const SizedBox(height: 30),
                   const Text(
-                    '|',
-                    style:
-                    TextStyle(color: Colors.white70, fontSize: 13),
+                    "Related Videos",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    videoDuration,
-                    style:
-                    const TextStyle(color: Colors.white70, fontSize: 13),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                      icon: const Icon(Icons.play_arrow),
-                      label: const Text(
-                        "Play Now",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2C2C2C),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                      icon: const Icon(Icons.share_outlined),
-                      label: const Text(
-                        "Share",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Text(
-                videoDescription,
-                style:
-                const TextStyle(color: Colors.white70, fontSize: 14),
-              ),
-              const SizedBox(height: 30),
-              const Text(
-                "Related Videos",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 150,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: relatedVideos.length,
-                  itemBuilder: (context, index) {
-                    final video = relatedVideos[index];
-                    return _buildRelatedVideoCard(
+                  const SizedBox(height: 16),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: relatedVideos.length,
+                    itemBuilder: (context, index) {
+                      final video = relatedVideos[index];
+                      return _buildRelatedVideoCard(
                         video['thumbnail']!,
                         video['title']!,
                         video['date']!,
                         video['duration']!,
+                      );
                     },
-                ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 30),
           ],
         ),
       ),
-      ],
-    ),
-    ),
+    );
+  }
+
+  Widget _buildPlayButton() {
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadius.circular(30),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.orange,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.play_arrow, color: Colors.white),
+            SizedBox(width: 6),
+            Text(
+              "Play Now",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShareButton() {
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadius.circular(30),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2C2C2C),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.share_outlined, color: Colors.white, size: 20),
+            SizedBox(width: 6),
+            Text(
+              "Share",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildRelatedVideoCard(
       String thumbnail, String title, String date, String duration) {
-    return Container(
-      width: 250,
-      margin: const EdgeInsets.only(right: 16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C2C2C),
-        borderRadius: BorderRadius.circular(12),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              bottomLeft: Radius.circular(12),
-            ),
+            borderRadius: BorderRadius.circular(12),
             child: Stack(
               children: [
                 Image.asset(
                   thumbnail,
-                  width: 90,
-                  height: double.infinity,
+                  width: 140,
+                  height: 90,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      width: 90,
-                      height: double.infinity,
+                      width: 140,
+                      height: 90,
                       color: Colors.white12,
                       child: const Center(
                           child: Icon(Icons.image_not_supported,
@@ -230,9 +212,10 @@ class VideoDetailScreen extends StatelessWidget {
                   bottom: 5,
                   right: 5,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.6),
+                        color: const Color.fromARGB(153, 0, 0, 0),
                         borderRadius: BorderRadius.circular(4)),
                     child: Text(
                       duration,
@@ -243,35 +226,33 @@ class VideoDetailScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(width: 12),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    date,
-                    style: const TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    style: TextStyle(color: Colors.white54, fontSize: 11),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  date,
+                  style: const TextStyle(color: Colors.white70, fontSize: 12),
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                  style: TextStyle(color: Colors.white54, fontSize: 12),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
         ],
