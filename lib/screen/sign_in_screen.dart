@@ -122,7 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   const SizedBox(height: 30),
 
-                  // Sign In Button
+                  // ✅ Sign In Button with navigation
                   Center(
                     child: SizedBox(
                       width: 343,
@@ -135,7 +135,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         onPressed: () {
-                          // TODO: Add sign-in logic
+                          // ✅ Navigate to Home Screen after login
+                          Navigator.pushReplacementNamed(context, '/home');
                         },
                         child: const Text(
                           "SIGN IN",
@@ -148,6 +149,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 16),
                 ],
               ),
