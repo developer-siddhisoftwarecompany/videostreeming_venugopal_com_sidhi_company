@@ -1,7 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-class SearchScreen extends StatelessWidget {
+import 'plus_screen.dart';
+import 'trending_section.dart';
+import 'my_library_screen.dart';
+
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    if (index == 0) {
+      Navigator.pop(context);
+      return;
+    }
+
+    setState(() => _selectedIndex = index);
+
+    Widget page;
+    if (index == 1) {
+      page = const PlusScreen();
+    } else if (index == 2) {
+      page = const TrendingScreen();
+    } else {
+      page = const MyLibraryScreen();
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    ).then((_) {
+      setState(() => _selectedIndex = 0);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +87,7 @@ class SearchScreen extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Sarkari',
             hintStyle: const TextStyle(color: Colors.white54),
-            prefixIcon:
-            const Icon(Icons.search, color: Colors.white54),
+            prefixIcon: const Icon(Icons.search, color: Colors.white54),
             filled: true,
             fillColor: const Color(0xFF1E1E1E),
             contentPadding: const EdgeInsets.symmetric(vertical: 14),
@@ -140,8 +177,27 @@ class SearchScreen extends StatelessWidget {
                 );
               },
             ),
+            const SizedBox(height: 80),
           ],
         ),
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor:
+        const Color(0xFF0E0E10),
+        color: const Color(0xFF18181B),
+        buttonBackgroundColor: Colors.orange,
+        height: 70,
+        items: <Widget>[
+          Icon(Icons.home, size: 30, color: Colors.white),
+          Icon(Icons.add_box, size: 30, color: Colors.white),
+          Icon(CupertinoIcons.flame_fill,
+              size: 30, color: Colors.white),
+          Icon(Icons.video_library,
+              size: 30, color: Colors.white),
+        ],
+        index: _selectedIndex,
+        onTap: _onItemTapped,
+        animationDuration: const Duration(milliseconds: 300),
       ),
     );
   }

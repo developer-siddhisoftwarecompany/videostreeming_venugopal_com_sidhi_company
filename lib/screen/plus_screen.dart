@@ -1,7 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-class PlusScreen extends StatelessWidget {
+// Imports for navigation
+import 'trending_section.dart';
+import 'my_library_screen.dart';
+
+class PlusScreen extends StatefulWidget {
   const PlusScreen({super.key});
+
+  @override
+  State<PlusScreen> createState() => _PlusScreenState();
+}
+
+class _PlusScreenState extends State<PlusScreen> {
+  // Set default index to 1 for "Plus"
+  int _selectedIndex = 1;
+
+  void _onItemTapped(int index) {
+    if (index == 1) {
+      // We are already on this screen
+      setState(() => _selectedIndex = index);
+      return;
+    }
+
+    if (index == 0) {
+      // "Home" - just pop back.
+      Navigator.pop(context);
+      return;
+    }
+
+    // For Trending (2) and My Library (3)
+    Widget page;
+    if (index == 2) {
+      page = const TrendingScreen();
+    } else {
+      // index == 3
+      page = const MyLibraryScreen();
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    ).then((_) {
+      // When returning, reset index back to 1 (Plus)
+      setState(() => _selectedIndex = 1);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +83,6 @@ class PlusScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 25),
-
-            // Price banner
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -56,7 +99,8 @@ class PlusScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text("Try 7 Days For",
-                          style: TextStyle(color: Colors.white70, fontSize: 16)),
+                          style:
+                          TextStyle(color: Colors.white70, fontSize: 16)),
                       Text("\$1",
                           style: TextStyle(
                               color: Colors.orangeAccent,
@@ -70,10 +114,7 @@ class PlusScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
-
-            // Benefits section
             Wrap(
               spacing: 12,
               runSpacing: 12,
@@ -84,10 +125,7 @@ class PlusScreen extends StatelessWidget {
                 buildBenefit("Remove Ads", Icons.block),
               ],
             ),
-
             const SizedBox(height: 30),
-
-            // Trial detail card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -124,10 +162,7 @@ class PlusScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 40),
-
-            // Start Trial Button
             GestureDetector(
               onTap: () {},
               child: Container(
@@ -151,13 +186,30 @@ class PlusScreen extends StatelessWidget {
                 ),
               ),
             ),
+            // Added padding for the nav bar
+            const SizedBox(height: 80),
           ],
         ),
+      ),
+      // Added the CurvedNavigationBar
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: const Color(0xFF0E0E10),
+        color: const Color(0xFF18181B),
+        buttonBackgroundColor: Colors.orange,
+        height: 70,
+        items: <Widget>[
+          Icon(Icons.home, size: 30, color: Colors.white),
+          Icon(Icons.add_box, size: 30, color: Colors.white),
+          Icon(CupertinoIcons.flame_fill, size: 30, color: Colors.white),
+          Icon(Icons.video_library, size: 30, color: Colors.white),
+        ],
+        index: _selectedIndex,
+        onTap: _onItemTapped,
+        animationDuration: const Duration(milliseconds: 300),
       ),
     );
   }
 
-  // Widget for benefits (Unlock Videos, VIP Support, Remove Ads)
   Widget buildBenefit(String text, IconData icon) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -179,7 +231,6 @@ class PlusScreen extends StatelessWidget {
     );
   }
 
-  // Widget for trial detail rows
   Widget buildTrialStep({
     required IconData icon,
     required String title,
@@ -214,8 +265,7 @@ class PlusScreen extends StatelessWidget {
         ),
         if (tag.isNotEmpty)
           Container(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: tagColor.withOpacity(0.2),
               borderRadius: BorderRadius.circular(20),

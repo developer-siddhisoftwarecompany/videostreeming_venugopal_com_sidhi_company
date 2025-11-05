@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'home_screen.dart';
 import 'plus_screen.dart';
 import 'trending_section.dart';
@@ -17,10 +18,6 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
 
   void _onItemTapped(int index) {
     if (index == _selectedIndex) return;
-
-    setState(() {
-      _selectedIndex = index;
-    });
 
     switch (index) {
       case 0:
@@ -112,21 +109,20 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFF18181B),
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.white54,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_box), label: "Plus"),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.flame_fill), label: "Trending"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.video_library), label: "My Library"),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: const Color(0xFF0E0E10),
+        color: const Color(0xFF18181B),
+        buttonBackgroundColor: Colors.orange,
+        height: 70,
+        items: <Widget>[
+          Icon(Icons.home, size: 30, color: Colors.white),
+          Icon(Icons.add_box, size: 30, color: Colors.white),
+          Icon(CupertinoIcons.flame_fill, size: 30, color: Colors.white),
+          Icon(Icons.video_library, size: 30, color: Colors.white),
         ],
+        index: _selectedIndex,
+        onTap: _onItemTapped,
+        animationDuration: const Duration(milliseconds: 300),
       ),
     );
   }

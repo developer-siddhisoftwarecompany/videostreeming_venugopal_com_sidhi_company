@@ -1,8 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart'; // Import for Cupertino icon
+import 'package:curved_navigation_bar/curved_navigation_bar.dart'; // Import the nav bar
 import 'video_detail_screen.dart';
 
-class TrendingScreen extends StatelessWidget {
+// Imports for navigation
+import 'plus_screen.dart';
+import 'my_library_screen.dart';
+import 'search_screen.dart';
+
+class TrendingScreen extends StatefulWidget {
   const TrendingScreen({super.key});
+
+  @override
+  State<TrendingScreen> createState() => _TrendingScreenState();
+}
+
+class _TrendingScreenState extends State<TrendingScreen> {
+  // Set default index to 2 for "Trending"
+  int _selectedIndex = 2;
+
+  void _onItemTapped(int index) {
+    if (index == 2) {
+      // We are already on this screen
+      setState(() => _selectedIndex = index);
+      return;
+    }
+
+    if (index == 0) {
+      // "Home" - just pop back.
+      Navigator.pop(context);
+      return;
+    }
+
+    // For Plus (1) and My Library (3)
+    Widget page;
+    if (index == 1) {
+      page = const PlusScreen();
+    } else {
+      // index == 3
+      page = const MyLibraryScreen();
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    ).then((_) {
+      // When returning, reset index back to 2 (Trending)
+      setState(() => _selectedIndex = 2);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +91,13 @@ class TrendingScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              // Navigate to search screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchScreen()),
+              );
+            },
           ),
         ],
       ),
@@ -97,6 +149,15 @@ class TrendingScreen extends StatelessWidget {
                                   height: 100,
                                   width: 100,
                                   fit: BoxFit.cover,
+                                  // Handle image errors
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                        height: 100,
+                                        width: 100,
+                                        color: Colors.white12,
+                                        child: const Icon(Icons.broken_image,
+                                            color: Colors.white54),
+                                      ),
                                 ),
                                 Positioned(
                                   bottom: 5,
@@ -194,23 +255,27 @@ class TrendingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              // Added padding for the nav bar
+              const SizedBox(height: 80),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.white70,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: "Plus"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.trending_up), label: "Trending"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.video_library), label: "My Library"),
+      // Replaced with CurvedNavigationBar
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: const Color(0xFF0E0E10),
+        color: const Color(0xFF18181B),
+        buttonBackgroundColor: Colors.orange,
+        height: 70,
+        items: <Widget>[
+          Icon(Icons.home, size: 30, color: Colors.white),
+          Icon(Icons.add_box, size: 30, color: Colors.white),
+          Icon(CupertinoIcons.flame_fill, size: 30, color: Colors.white),
+          Icon(Icons.video_library, size: 30, color: Colors.white),
         ],
+        index: _selectedIndex,
+        onTap: _onItemTapped,
+        animationDuration: const Duration(milliseconds: 300),
       ),
     );
   }
