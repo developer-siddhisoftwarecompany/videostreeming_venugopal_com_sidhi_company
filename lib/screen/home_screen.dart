@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final topVideos = [
       'assets/video1.png',
       'assets/video2.png',
-      'assets/video3.png',
+      'assetsC/video3.png',
       'assets/video4.png',
     ];
 
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final youtubeList = [
       'assets/yt1.png',
-      'assets/yt2.png',
+      'assetsAss/yt2.png',
       'assets/yt3.png',
       'assets/yt3.png',
     ];
@@ -201,7 +201,6 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _selectedIndex,
         onTap: _onItemTapped,
         animationDuration: const Duration(milliseconds: 300),
-        letBackgroundClipping: true,
       ),
     );
   }
