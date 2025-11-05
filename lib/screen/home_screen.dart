@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'sarkari_kam.dart';
 import 'plus_screen.dart';
 import 'trending_section.dart';
@@ -20,26 +21,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
     if (index == 0) {
-      setState(() => _selectedIndex = index);
+      setState(() {
+        _selectedIndex = index;
+      });
       return;
     }
 
+    Widget page;
     if (index == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const PlusScreen()),
-      );
+      page = const PlusScreen();
     } else if (index == 2) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const TrendingScreen()),
-      );
-    } else if (index == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const MyLibraryScreen()),
-      );
+      page = const TrendingScreen();
+    } else {
+      page = const MyLibraryScreen();
     }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    ).then((_) {
+      setState(() => _selectedIndex = 0);
+    });
   }
 
   @override
@@ -62,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final sarkariList = [
       'assets/sarkari1.png',
-      'assets/sarkari2.png',
       'assets/sarkari3.png',
       'assets/sarkari4.png',
     ];
@@ -182,21 +183,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFF18181B),
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.white54,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_box), label: "Plus"),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.flame_fill), label: "Trending"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.video_library), label: "My Library"),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: const Color(0xFF0E0E10),
+        color: const Color(0xFF18181B),
+        buttonBackgroundColor: Colors.orange,
+        height: 70,
+        items: <Widget>[
+          Icon(Icons.home,
+              size: 30, color: Colors.white),
+          Icon(Icons.add_box,
+              size: 30, color: Colors.white),
+          Icon(CupertinoIcons.flame_fill,
+              size: 30, color: Colors.white),
+          Icon(Icons.video_library,
+              size: 30, color: Colors.white),
         ],
+        index: _selectedIndex,
+        onTap: _onItemTapped,
+        animationDuration: const Duration(milliseconds: 300),
+        letBackgroundClipping: true,
       ),
     );
   }
