@@ -21,9 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
     if (index == 0) {
-      setState(() {
-        _selectedIndex = index;
-      });
+      setState(() => _selectedIndex = index);
       return;
     }
 
@@ -47,18 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final categories = [
-      {'icon': Icons.video_library, 'title': 'Free Videos'},
-      {'icon': Icons.account_balance, 'title': 'Sarkari Kaam'},
-      {'icon': Icons.video_collection, 'title': 'Youtube'},
-      {'icon': Icons.work, 'title': 'Part Time'},
-      {'icon': Icons.camera_alt, 'title': 'Instagram'},
-      {'icon': Icons.apps, 'title': 'View All'},
+      {'image': 'assets/Free_Videos.png', 'title': 'Free Videos'},
+      {'image': 'assets/Sarkari_Kaam.png', 'title': 'Sarkari Kaam'},
+      {'image': 'assets/Youtube.png', 'title': 'Youtube'},
+      {'image': 'assets/Part_Time.png', 'title': 'Part Time'},
+      {'image': 'assets/Instagram.png', 'title': 'Instagram'},
+      {'image': 'assets/View_All.png', 'title': 'View All'},
     ];
 
     final topVideos = [
       'assets/video1.png',
       'assets/video2.png',
-      'assetsC/video3.png',
+      'assets/video3.png',
       'assets/video4.png',
     ];
 
@@ -70,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final youtubeList = [
       'assets/yt1.png',
-      'assetsAss/yt2.png',
+      'assets/yt2.png',
       'assets/yt3.png',
       'assets/yt3.png',
     ];
@@ -92,15 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SearchScreen()),
-                );
-              },
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchScreen()),
+              ),
               child: Container(
-                padding:
-                const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                 decoration: BoxDecoration(
                   color: Colors.white12,
                   borderRadius: BorderRadius.circular(14),
@@ -131,22 +126,19 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 final category = categories[index];
                 final title = category['title'] as String;
+                final image = category['image'] as String;
 
                 return GestureDetector(
                   onTap: () {
                     if (title == 'Sarkari Kaam') {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const SarkariKamScreen(),
-                        ),
+                        MaterialPageRoute(builder: (context) => const SarkariKamScreen()),
                       );
                     } else if (title == 'View All') {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const AllCategoriesScreen(),
-                        ),
+                        MaterialPageRoute(builder: (context) => const AllCategoriesScreen()),
                       );
                     }
                   },
@@ -158,11 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(category['icon'] as IconData, color: Colors.white),
+                        Image.asset(image, height: 40, width: 40, fit: BoxFit.contain),
                         const SizedBox(height: 6),
                         Text(
                           title,
-                          style: const TextStyle(color: Colors.white70),
+                          style: const TextStyle(color: Colors.white70, fontSize: 13),
                         ),
                       ],
                     ),
@@ -188,15 +180,11 @@ class _HomeScreenState extends State<HomeScreen> {
         color: const Color(0xFF18181B),
         buttonBackgroundColor: Colors.orange,
         height: 70,
-        items: <Widget>[
-          Icon(Icons.home,
-              size: 30, color: Colors.white),
-          Icon(Icons.add_box,
-              size: 30, color: Colors.white),
-          Icon(CupertinoIcons.flame_fill,
-              size: 30, color: Colors.white),
-          Icon(Icons.video_library,
-              size: 30, color: Colors.white),
+        items: const <Widget>[
+          Icon(Icons.home, size: 30, color: Colors.white),
+          Icon(Icons.add_box, size: 30, color: Colors.white),
+          Icon(CupertinoIcons.flame_fill, size: 30, color: Colors.white),
+          Icon(Icons.video_library, size: 30, color: Colors.white),
         ],
         index: _selectedIndex,
         onTap: _onItemTapped,
@@ -284,8 +272,7 @@ class SectionTitle extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AllCategoriesScreen(),
-                ),
+                    builder: (context) => const AllCategoriesScreen()),
               );
             },
             child: const Text(

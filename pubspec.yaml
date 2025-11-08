@@ -57,6 +57,13 @@ flutter:
   assets:
     - assets/Frame.png
     - assets/Frame2.png
+    - assets/seekho.jpeg
+    - assets/Free_Videos.png
+    - assets/Instagram.png
+    - assets/Part_Time.png
+    - assets/Sarkari_Kaam.png
+    - assets/View_All.png
+    - assets/Youtube.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
