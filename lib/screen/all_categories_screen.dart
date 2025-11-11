@@ -5,27 +5,28 @@ class AllCategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final categories = [
-      {'icon': Icons.account_balance, 'title': 'Sarkari Kaam'},
-      {'icon': Icons.play_circle_fill, 'title': 'Youtube'},
-      {'icon': Icons.work_history, 'title': 'Part-time'},
-      {'icon': Icons.camera_alt, 'title': 'Youtube'},
-      {'icon': Icons.bar_chart, 'title': 'Stock Market'},
-      {'icon': Icons.translate, 'title': 'English Speaking'},
-      {'icon': Icons.business_center, 'title': 'Business'},
-      {'icon': Icons.phone_android, 'title': 'Mobile Tricks'},
-      {'icon': Icons.attach_money, 'title': 'Finance'},
-      {'icon': Icons.thumb_up, 'title': 'Success'},
-      {'icon': Icons.monitor_heart, 'title': 'Health'},
-      {'icon': Icons.school, 'title': 'Education'},
-      {'icon': Icons.feed, 'title': 'News'},
-      {'icon': Icons.gavel, 'title': 'Crime'},
-      {'icon': Icons.work, 'title': 'Career'},
-      {'icon': Icons.badge, 'title': 'Govt Job'},
-      {'icon': Icons.memory, 'title': 'Technology'},
-      {'icon': Icons.palette, 'title': 'Art & Craft'},
-      {'icon': Icons.fitness_center, 'title': 'Fitness'},
-      {'icon': Icons.sports_basketball, 'title': 'Sports'},
+      {'image': 'assets/Sarkari_Kaam.png', 'title': 'Sarkari Kaam'},
+      {'image': 'assets/Youtube.png', 'title': 'Youtube'},
+      {'image': 'assets/Part_Time.png', 'title': 'Part-time'},
+      {'image': 'assets/Instagram.png', 'title': 'Instagram'},
+      {'image': 'assets/Stock_Market.png', 'title': 'Stock Market'},
+      {'image': 'assets/English_Speaking.png', 'title': 'English Speaking'},
+      {'image': 'assets/Business.png', 'title': 'Business'},
+      {'image': 'assets/Mobile_Tricks.png', 'title': 'Mobile Tricks'},
+      {'image': 'assets/Finance.png', 'title': 'Finance'},
+      {'image': 'assets/Success.png', 'title': 'Success'},
+      {'image': 'assets/Health.png', 'title': 'Health'},
+      {'image': 'assets/Education.png', 'title': 'Education'},
+      {'image': 'assets/News.png', 'title': 'News'},
+      {'image': 'assets/Crime.png', 'title': 'Crime'},
+      {'image': 'assets/Career.png', 'title': 'Career'},
+      {'image': 'assets/Govt_Job.png', 'title': 'Govt Job'},
+      {'image': 'assets/Technology.png', 'title': 'Technology'},
+      {'image': 'assets/Art_Craft.png', 'title': 'Art & Craft'},
+      {'image': 'assets/Fitness.png', 'title': 'Fitness'},
+      {'image': 'assets/Sports.png', 'title': 'Sports'},
     ];
 
     return Scaffold(
@@ -60,11 +61,14 @@ class AllCategoriesScreen extends StatelessWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
-            childAspectRatio: 1.5,
+            childAspectRatio: 1.5, // You might need to adjust this
           ),
           itemCount: categories.length,
           itemBuilder: (context, index) {
             final category = categories[index];
+            final imagePath = category['image'] as String;
+            final title = category['title'] as String;
+
             return Container(
               decoration: BoxDecoration(
                 color: const Color(0xFF2E2636),
@@ -73,11 +77,22 @@ class AllCategoriesScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(category['icon'] as IconData,
-                      color: Colors.white, size: 30),
+                  // ---!! UPDATE !! ---
+                  // Replaced Icon with Image.asset
+                  Image.asset(
+                    imagePath,
+                    height: 40, // Adjust size as needed
+                    width: 40,  // Adjust size as needed
+                    color: Colors.white, // This will tint your PNG white
+                    errorBuilder: (context, error, stackTrace) {
+                      // Fallback icon if image fails to load
+                      return const Icon(Icons.image_not_supported,
+                          color: Colors.white54, size: 30);
+                    },
+                  ),
                   const SizedBox(height: 10),
                   Text(
-                    category['title'] as String,
+                    title,
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w600),
                   ),

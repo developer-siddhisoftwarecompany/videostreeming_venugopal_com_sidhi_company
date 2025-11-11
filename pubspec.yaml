@@ -64,6 +64,22 @@ flutter:
     - assets/Sarkari_Kaam.png
     - assets/View_All.png
     - assets/Youtube.png
+    - assets/Stock_Market.png
+    - assets/English_Speaking.png
+    - assets/Business.png
+    - assets/Mobile_Tricks.png
+    - assets/Finance.png
+    - assets/Success.png
+    - assets/Health.png
+    - assets/Education.png
+    - assets/News.png
+    - assets/Crime.png
+    - assets/Career.png
+    - assets/Govt_Job.png
+    - assets/Technology.png
+    - assets/Art_Craft.png
+    - assets/Fitness.png
+    - assets/Sports.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
