@@ -7,26 +7,26 @@ class AllCategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final categories = [
-      {'image': 'assets/Sarkari_Kaam.png', 'title': 'Sarkari Kaam'},
-      {'image': 'assets/Youtube.png', 'title': 'Youtube'},
-      {'image': 'assets/Part_Time.png', 'title': 'Part-time'},
-      {'image': 'assets/Instagram.png', 'title': 'Instagram'},
-      {'image': 'assets/Stock_Market.png', 'title': 'Stock Market'},
-      {'image': 'assets/English_Speaking.png', 'title': 'English Speaking'},
-      {'image': 'assets/Business.png', 'title': 'Business'},
-      {'image': 'assets/Mobile_Tricks.png', 'title': 'Mobile Tricks'},
-      {'image': 'assets/Finance.png', 'title': 'Finance'},
-      {'image': 'assets/Success.png', 'title': 'Success'},
-      {'image': 'assets/Health.png', 'title': 'Health'},
-      {'image': 'assets/Education.png', 'title': 'Education'},
-      {'image': 'assets/News.png', 'title': 'News'},
-      {'image': 'assets/Crime.png', 'title': 'Crime'},
-      {'image': 'assets/Career.png', 'title': 'Career'},
-      {'image': 'assets/Govt_Job.png', 'title': 'Govt Job'},
-      {'image': 'assets/Technology.png', 'title': 'Technology'},
-      {'image': 'assets/Art_Craft.png', 'title': 'Art & Craft'},
-      {'image': 'assets/Fitness.png', 'title': 'Fitness'},
-      {'image': 'assets/Sports.png', 'title': 'Sports'},
+      {'image': 'assets/Sarkari_Kaam.svg', 'title': 'Sarkari Kaam'},
+      {'image': 'assets/Youtube.svg', 'title': 'Youtube'},
+      {'image': 'assets/Part_Time.svg', 'title': 'Part-time'},
+      {'image': 'assets/Instagram.svg', 'title': 'Instagram'},
+      {'image': 'assets/Stock_Market.svg', 'title': 'Stock Market'},
+      {'image': 'assets/English_Speaking.svg', 'title': 'English Speaking'},
+      {'image': 'assets/Business.svg', 'title': 'Business'},
+      {'image': 'assets/Mobile_Tricks.svg', 'title': 'Mobile Tricks'},
+      {'image': 'assets/Finance.svg', 'title': 'Finance'},
+      {'image': 'assets/Success.svg', 'title': 'Success'},
+      {'image': 'assets/Health.svg', 'title': 'Health'},
+      {'image': 'assets/Education.svg', 'title': 'Education'},
+      {'image': 'assets/News.svg', 'title': 'News'},
+      {'image': 'assets/Crime.svg', 'title': 'Crime'},
+      {'image': 'assets/Career.svg', 'title': 'Career'},
+      {'image': 'assets/Govt_Job.svg', 'title': 'Govt Job'},
+      {'image': 'assets/Technology.svg', 'title': 'Technology'},
+      {'image': 'assets/Art_Craft.svg', 'title': 'Art & Craft'},
+      {'image': 'assets/Fitness.svg', 'title': 'Fitness'},
+      {'image': 'assets/Sports.svg', 'title': 'Sports'},
     ];
 
     return Scaffold(
@@ -83,7 +83,7 @@ class AllCategoriesScreen extends StatelessWidget {
                     imagePath,
                     height: 40, // Adjust size as needed
                     width: 40,  // Adjust size as needed
-                    color: Colors.white, // This will tint your PNG white
+
                     errorBuilder: (context, error, stackTrace) {
                       // Fallback icon if image fails to load
                       return const Icon(Icons.image_not_supported,

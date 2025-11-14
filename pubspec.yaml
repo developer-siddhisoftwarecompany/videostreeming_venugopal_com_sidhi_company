@@ -58,28 +58,28 @@ flutter:
     - assets/Frame.png
     - assets/Frame2.png
     - assets/seekho.jpeg
-    - assets/Free_Videos.png
-    - assets/Instagram.png
-    - assets/Part_Time.png
-    - assets/Sarkari_Kaam.png
-    - assets/View_All.png
-    - assets/Youtube.png
-    - assets/Stock_Market.png
-    - assets/English_Speaking.png
-    - assets/Business.png
-    - assets/Mobile_Tricks.png
-    - assets/Finance.png
-    - assets/Success.png
-    - assets/Health.png
-    - assets/Education.png
-    - assets/News.png
-    - assets/Crime.png
-    - assets/Career.png
-    - assets/Govt_Job.png
-    - assets/Technology.png
-    - assets/Art_Craft.png
-    - assets/Fitness.png
-    - assets/Sports.png
+    - assets/Free_Videos.svg
+    - assets/Instagram.svg
+    - assets/Part_Time.svg
+    - assets/Sarkari_Kaam.svg
+    - assets/View_All.svg
+    - assets/Youtube.svg
+    - assets/Stock_Market.svg
+    - assets/English_Speaking.svg
+    - assets/Business.svg
+    - assets/Mobile_Tricks.svg
+    - assets/Finance.svg
+    - assets/Success.svg
+    - assets/Health.svg
+    - assets/Education.svg
+    - assets/News.svg
+    - assets/Crime.svg
+    - assets/Career.svg
+    - assets/Govt_Job.svg
+    - assets/Technology.svg
+    - assets/Art_Craft.svg
+    - assets/Fitness.svg
+    - assets/Sports.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

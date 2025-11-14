@@ -45,12 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final categories = [
-      {'image': 'assets/Free_Videos.png', 'title': 'Free Videos'},
-      {'image': 'assets/Sarkari_Kaam.png', 'title': 'Sarkari Kaam'},
-      {'image': 'assets/Youtube.png', 'title': 'Youtube'},
-      {'image': 'assets/Part_Time.png', 'title': 'Part Time'},
-      {'image': 'assets/Instagram.png', 'title': 'Instagram'},
-      {'image': 'assets/View_All.png', 'title': 'View All'},
+      {'image': 'assets/Free_Videos.svg', 'title': 'Free Videos'},
+      {'image': 'assets/Sarkari_Kaam.svg', 'title': 'Sarkari Kaam'},
+      {'image': 'assets/Youtube.svg', 'title': 'Youtube'},
+      {'image': 'assets/Part_Time.svg', 'title': 'Part Time'},
+      {'image': 'assets/Instagram.svg', 'title': 'Instagram'},
+      {'image': 'assets/View_All.svg', 'title': 'View All'},
     ];
 
     final topVideos = [
