@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class OnboardingScreen extends   StatelessWidget {
+class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
@@ -13,7 +13,6 @@ class OnboardingScreen extends   StatelessWidget {
             'assets/Frame.png',
             fit: BoxFit.cover,
           ),
-
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -30,7 +29,7 @@ class OnboardingScreen extends   StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -54,27 +53,30 @@ class OnboardingScreen extends   StatelessWidget {
                   ),
                   const SizedBox(height: 32),
 
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(30),
+                      splashColor: Colors.white24,
+                      onTap: () {
                         Navigator.pushNamed(context, '/signup');
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF7B2C),
-                        shape: RoundedRectangleBorder(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFF7B2C),
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        padding: EdgeInsets.zero,
-                      ),
-                      child: const Text(
-                        "CONTINUE",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 1,
-                          fontSize: 16,
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "CONTINUE",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 1,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),

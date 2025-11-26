@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-// Imports for navigation
 import 'trending_section.dart';
 import 'my_library_screen.dart';
+import 'search_screen.dart';
+import 'all_categories_screen.dart';
+import 'home_screen.dart';
+import 'sign_in_screen.dart';
 
 class PlusScreen extends StatefulWidget {
   const PlusScreen({super.key});
@@ -14,36 +17,19 @@ class PlusScreen extends StatefulWidget {
 }
 
 class _PlusScreenState extends State<PlusScreen> {
-  // Set default index to 1 for "Plus"
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     if (index == 1) {
-      // We are already on this screen
       setState(() => _selectedIndex = index);
       return;
     }
-
     if (index == 0) {
-      // "Home" - just pop back.
       Navigator.pop(context);
       return;
     }
-
-    // For Trending (2) and My Library (3)
-    Widget page;
-    if (index == 2) {
-      page = const TrendingScreen();
-    } else {
-      // index == 3
-      page = const MyLibraryScreen();
-    }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => page),
-    ).then((_) {
-      // When returning, reset index back to 1 (Plus)
+    Widget page = index == 2 ? const TrendingScreen() : const MyLibraryScreen();
+    Navigator.push(context, MaterialPageRoute(builder: (_) => page)).then((_) {
       setState(() => _selectedIndex = 1);
     });
   }
@@ -52,9 +38,18 @@ class _PlusScreenState extends State<PlusScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0E0E10),
+
+      drawer: _buildAppDrawer(),
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         title: const Text(
           "SEEKHO",
           style: TextStyle(
@@ -66,10 +61,10 @@ class _PlusScreenState extends State<PlusScreen> {
         ),
         centerTitle: true,
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 10),
             const Text(
@@ -83,6 +78,7 @@ class _PlusScreenState extends State<PlusScreen> {
               ),
             ),
             const SizedBox(height: 25),
+
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -94,13 +90,12 @@ class _PlusScreenState extends State<PlusScreen> {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
-                children: [
+                children: const [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text("Try 7 Days For",
-                          style:
-                          TextStyle(color: Colors.white70, fontSize: 16)),
+                          style: TextStyle(color: Colors.white70, fontSize: 16)),
                       Text("\$1",
                           style: TextStyle(
                               color: Colors.orangeAccent,
@@ -108,13 +103,15 @@ class _PlusScreenState extends State<PlusScreen> {
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  const Text("Then \$199/Month",
+                  SizedBox(height: 4),
+                  Text("Then \$199/Month",
                       style: TextStyle(color: Colors.white54)),
                 ],
               ),
             ),
+
             const SizedBox(height: 20),
+
             Wrap(
               spacing: 12,
               runSpacing: 12,
@@ -125,7 +122,9 @@ class _PlusScreenState extends State<PlusScreen> {
                 buildBenefit("Remove Ads", Icons.block),
               ],
             ),
+
             const SizedBox(height: 30),
+
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -134,7 +133,6 @@ class _PlusScreenState extends State<PlusScreen> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildTrialStep(
                     icon: Icons.rocket_launch,
@@ -162,42 +160,49 @@ class _PlusScreenState extends State<PlusScreen> {
                 ],
               ),
             ),
+
             const SizedBox(height: 40),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 55,
-                width: double.infinity,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFFF7A00), Color(0xFFDA22FF)],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
+
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white24,
+                onTap: () {},
+                child: Container(
+                  height: 55,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF7A00), Color(0xFFDA22FF)],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
                   ),
-                ),
-                child: const Text(
-                  "START TRIAL",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    "START TRIAL",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
                 ),
               ),
             ),
-            // Added padding for the nav bar
+
             const SizedBox(height: 80),
           ],
         ),
       ),
-      // Added the CurvedNavigationBar
+
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: const Color(0xFF0E0E10),
         color: const Color(0xFF18181B),
         buttonBackgroundColor: Colors.orange,
         height: 70,
-        items: <Widget>[
+        items: const [
           Icon(Icons.home, size: 30, color: Colors.white),
           Icon(Icons.add_box, size: 30, color: Colors.white),
           Icon(CupertinoIcons.flame_fill, size: 30, color: Colors.white),
@@ -205,28 +210,29 @@ class _PlusScreenState extends State<PlusScreen> {
         ],
         index: _selectedIndex,
         onTap: _onItemTapped,
-        animationDuration: const Duration(milliseconds: 300),
       ),
     );
   }
 
   Widget buildBenefit(String text, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white12,
+    return Material(
+      color: Colors.white12,
+      borderRadius: BorderRadius.circular(25),
+      child: InkWell(
         borderRadius: BorderRadius.circular(25),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: Colors.white70, size: 18),
-          const SizedBox(width: 6),
-          Text(
-            text,
-            style: const TextStyle(color: Colors.white70),
+        splashColor: Colors.orange.withOpacity(0.25),
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: Colors.white70, size: 18),
+              const SizedBox(width: 6),
+              Text(text, style: const TextStyle(color: Colors.white70)),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -238,44 +244,150 @@ class _PlusScreenState extends State<PlusScreen> {
     required String tag,
     required Color tagColor,
   }) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(
-            color: Colors.orangeAccent,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: Colors.white, size: 20),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        splashColor: Colors.white24,
+        onTap: () {},
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                color: Colors.orangeAccent,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: Colors.white, size: 20),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16)),
+                  Text(subtitle,
+                      style:
+                      const TextStyle(color: Colors.white54, fontSize: 13)),
+                ],
+              ),
+            ),
+            if (tag.isNotEmpty)
+              Container(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: tagColor.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(tag,
+                    style: TextStyle(color: tagColor, fontSize: 12)),
+              ),
+          ],
         ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+    );
+  }
+
+  Drawer _buildAppDrawer() {
+    return Drawer(
+      backgroundColor: const Color(0xFF1C1C1E),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            color: const Color(0xFF2C2C2E),
+            padding: const EdgeInsets.only(left: 20, bottom: 30, top: 60),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 32,
+                  backgroundColor: Colors.orange,
+                  child: const Icon(Icons.person,
+                      color: Colors.white, size: 40),
+                ),
+                const SizedBox(width: 16),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Seekho User",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18)),
+                    Text("user@gmail.com",
+                        style: TextStyle(color: Colors.white70, fontSize: 13)),
+                  ],
+                )
+              ],
+            ),
+          ),
+
+          _drawerItem(Icons.home, "Home", () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          }),
+
+          _drawerItem(Icons.search, "Search", () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => const SearchScreen()));
+          }),
+
+          _drawerItem(Icons.category, "All Categories", () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const AllCategoriesScreen()));
+          }),
+
+          _drawerItem(Icons.favorite, "Saved Videos", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MyLibraryScreen()));
+          }),
+
+          _drawerItem(Icons.history, "Watch History", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MyLibraryScreen()));
+          }),
+
+          _drawerItem(Icons.settings, "Settings", () {}),
+
+          _drawerItem(Icons.help_outline, "Help & Support", () {}),
+
+          const Spacer(),
+
+          _drawerItem(Icons.logout, "Logout", () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => const SignInScreen()));
+          }),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  Widget _drawerItem(IconData icon, String title, VoidCallback onTap) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: Colors.white24,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+          child: Row(
             children: [
+              Icon(icon, color: Colors.white70, size: 22),
+              const SizedBox(width: 20),
               Text(title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16)),
-              Text(subtitle,
-                  style: const TextStyle(color: Colors.white54, fontSize: 13)),
+                  style: const TextStyle(color: Colors.white, fontSize: 15)),
             ],
           ),
         ),
-        if (tag.isNotEmpty)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: tagColor.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              tag,
-              style: TextStyle(color: tagColor, fontSize: 12),
-            ),
-          ),
-      ],
+      ),
     );
   }
 }

@@ -15,14 +15,24 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0E0E0E),
+
       appBar: AppBar(
         backgroundColor: const Color(0xFF0E0E0E),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            splashColor: Colors.white24,
+            onTap: () => Navigator.pop(context),
+            child: const Padding(
+              padding: EdgeInsets.all(12),
+              child: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            ),
+          ),
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -45,7 +55,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 50),
-            Align(
+
+            const Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "New Password",
@@ -56,7 +67,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
               ),
             ),
+
             const SizedBox(height: 12),
+
             TextField(
               controller: passController,
               obscureText: _obscureText,
@@ -88,19 +101,23 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
               ),
             ),
+
             const SizedBox(height: 40),
-            Center(
-              child: SizedBox(
-                width: 343,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFF97316),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white24,
+                onTap: () => Navigator.pushNamed(context, '/signin'),
+                child: Container(
+                  width: 343,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF97316),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  onPressed: () => Navigator.pushNamed(context, '/signin'),
+                  alignment: Alignment.center,
                   child: const Text(
                     "RESET PASSWORD",
                     style: TextStyle(
@@ -112,15 +129,25 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
               ),
             ),
+
             const SizedBox(height: 25),
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/signin'),
-              child: const Text(
-                "Go back to\nSign In",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  height: 1.5,
+
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                splashColor: Colors.white24,
+                borderRadius: BorderRadius.circular(8),
+                onTap: () => Navigator.pushNamed(context, '/signin'),
+                child: const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    "Go back to\nSign In",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      height: 1.5,
+                    ),
+                  ),
                 ),
               ),
             ),

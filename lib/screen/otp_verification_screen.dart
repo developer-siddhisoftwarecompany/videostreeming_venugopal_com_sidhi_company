@@ -10,9 +10,17 @@ class OTPVerificationScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF0E0E0E),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            splashColor: Colors.white24,
+            onTap: () => Navigator.pop(context),
+            child: const Padding(
+              padding: EdgeInsets.all(12),
+              child: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            ),
+          ),
         ),
       ),
       body: Padding(
@@ -32,13 +40,12 @@ class OTPVerificationScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              "A 6-digit OTP code has been issued and sent to the provided email address.\n"
-                  "johndoe@gmail.com",
+              "A 6-digit OTP code has been issued and sent to the provided email address.\njohndoe@gmail.com",
               style: TextStyle(color: Colors.white70, fontSize: 14),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 50),
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Email Address",
@@ -50,6 +57,7 @@ class OTPVerificationScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
@@ -80,21 +88,25 @@ class OTPVerificationScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             const SizedBox(height: 40),
-            Center(
-              child: SizedBox(
-                width: 343,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFF97316),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white24,
+                onTap: () {
+                  Navigator.pushNamed(context, '/reset');
+                },
+                child: Container(
+                  width: 343,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF97316),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/reset');
-                  },
+                  alignment: Alignment.center,
                   child: const Text(
                     "SEND OTP",
                     style: TextStyle(
@@ -106,21 +118,32 @@ class OTPVerificationScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             const SizedBox(height: 20),
+
             const Text(
               'If you have not received OTP check “Spams”',
               style: TextStyle(color: Colors.white70, fontSize: 13),
               textAlign: TextAlign.center,
             ),
+
             const SizedBox(height: 6),
-            GestureDetector(
-              onTap: () {},
-              child: const Text(
-                'Send Again',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
+
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                splashColor: Colors.white24,
+                onTap: () {},
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Send Again',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 ),
               ),
             ),

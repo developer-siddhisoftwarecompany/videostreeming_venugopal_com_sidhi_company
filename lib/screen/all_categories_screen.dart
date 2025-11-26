@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AllCategoriesScreen extends StatelessWidget {
   const AllCategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final categories = [
       {'image': 'assets/Sarkari_Kaam.svg', 'title': 'Sarkari Kaam'},
       {'image': 'assets/Youtube.svg', 'title': 'Youtube'},
@@ -61,42 +61,38 @@ class AllCategoriesScreen extends StatelessWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
-            childAspectRatio: 1.5, // You might need to adjust this
+            childAspectRatio: 1.5,
           ),
           itemCount: categories.length,
           itemBuilder: (context, index) {
-            final category = categories[index];
-            final imagePath = category['image'] as String;
-            final title = category['title'] as String;
+            final item = categories[index];
 
-            return Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF2E2636),
+            return Material(
+              color: const Color(0xFF2E2636),
+              borderRadius: BorderRadius.circular(16),
+              child: InkWell(
                 borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // ---!! UPDATE !! ---
-                  // Replaced Icon with Image.asset
-                  Image.asset(
-                    imagePath,
-                    height: 40, // Adjust size as needed
-                    width: 40,  // Adjust size as needed
-
-                    errorBuilder: (context, error, stackTrace) {
-                      // Fallback icon if image fails to load
-                      return const Icon(Icons.image_not_supported,
-                          color: Colors.white54, size: 30);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w600),
-                  ),
-                ],
+                splashColor: Colors.orange.withOpacity(0.25),
+                highlightColor: Colors.orange.withOpacity(0.15),
+                onTap: () {},
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      item['image']!,
+                      height: 40,
+                      width: 40,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      item['title']!,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

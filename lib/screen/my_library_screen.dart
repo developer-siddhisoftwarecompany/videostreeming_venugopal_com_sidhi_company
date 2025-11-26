@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 import 'home_screen.dart';
 import 'plus_screen.dart';
 import 'trending_section.dart';
 import 'video_detail_screen.dart';
+import 'search_screen.dart';
+import 'all_categories_screen.dart';
+import 'sign_in_screen.dart';
 
 class MyLibraryScreen extends StatefulWidget {
   const MyLibraryScreen({super.key});
@@ -18,28 +22,12 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
 
   void _onItemTapped(int index) {
     if (index == _selectedIndex) return;
-
-    switch (index) {
-      case 0:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
-        break;
-      case 1:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const PlusScreen()),
-        );
-        break;
-      case 2:
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const TrendingScreen()),
-        );
-        break;
-      case 3:
-        break;
+    if (index == 0) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    } else if (index == 1) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const PlusScreen()));
+    } else if (index == 2) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const TrendingScreen()));
     }
   }
 
@@ -54,29 +42,42 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF0E0E10),
+
+      drawer: _buildDrawer(),
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.white),
-          onPressed: () {},
+        leading: Builder(
+          builder: (context) => Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(50),
+              splashColor: Colors.orange.withOpacity(0.25),
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: const Padding(
+                padding: EdgeInsets.all(12),
+                child: Icon(Icons.menu, color: Colors.white),
+              ),
+            ),
+          ),
         ),
         title: const Text(
           "My Library",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
+
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
+
             _buildSectionTitle("History"),
             const SizedBox(height: 12),
+
             SizedBox(
               height: 160,
               child: ListView.builder(
@@ -91,6 +92,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                 },
               ),
             ),
+
             const SizedBox(height: 30),
             _buildSectionTitle("Saved"),
             const SizedBox(height: 20),
@@ -98,6 +100,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
               icon: Icons.archive_outlined,
               message: "Your saved videos will appear here",
             ),
+
             const SizedBox(height: 30),
             _buildSectionTitle("Liked"),
             const SizedBox(height: 20),
@@ -105,16 +108,18 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
               icon: Icons.archive_outlined,
               message: "Your liked videos will appear here",
             ),
+
             const SizedBox(height: 80),
           ],
         ),
       ),
+
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: const Color(0xFF0E0E10),
         color: const Color(0xFF18181B),
         buttonBackgroundColor: Colors.orange,
         height: 70,
-        items: <Widget>[
+        items: const [
           Icon(Icons.home, size: 30, color: Colors.white),
           Icon(Icons.add_box, size: 30, color: Colors.white),
           Icon(CupertinoIcons.flame_fill, size: 30, color: Colors.white),
@@ -122,7 +127,88 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
         ],
         index: _selectedIndex,
         onTap: _onItemTapped,
-        animationDuration: const Duration(milliseconds: 300),
+      ),
+    );
+  }
+
+  Drawer _buildDrawer() {
+    return Drawer(
+      backgroundColor: const Color(0xFF1C1C1E),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            color: const Color(0xFF2C2C2E),
+            padding: const EdgeInsets.only(left: 20, bottom: 30, top: 60),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 32,
+                  backgroundColor: Colors.orange,
+                  child: const Icon(Icons.person, color: Colors.white, size: 40),
+                ),
+                const SizedBox(width: 16),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Seekho User",
+                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text("user@gmail.com",
+                        style: TextStyle(color: Colors.white70, fontSize: 13)),
+                  ],
+                )
+              ],
+            ),
+          ),
+
+          _drawerItem(Icons.home, "Home", () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          }),
+
+          _drawerItem(Icons.search, "Search", () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const SearchScreen()));
+          }),
+
+          _drawerItem(Icons.category, "All Categories", () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const AllCategoriesScreen()));
+          }),
+
+          _drawerItem(Icons.favorite, "Saved Videos", () {}),
+
+          _drawerItem(Icons.history, "Watch History", () {}),
+
+          _drawerItem(Icons.settings, "Settings", () {}),
+
+          _drawerItem(Icons.help_outline, "Help & Support", () {}),
+
+          const Spacer(),
+
+          _drawerItem(Icons.logout, "Logout", () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignInScreen()));
+          }),
+
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  Widget _drawerItem(IconData icon, String title, VoidCallback onTap) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: Colors.white24,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+          child: Row(
+            children: [
+              Icon(icon, color: Colors.white70, size: 22),
+              const SizedBox(width: 20),
+              Text(title, style: const TextStyle(color: Colors.white, fontSize: 15)),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -130,89 +216,69 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      ),
+      style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
     );
   }
 
   Widget _buildEmptyState({required IconData icon, required String message}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 40),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: Colors.white24, size: 80),
-            const SizedBox(height: 16),
-            Text(
-              message,
-              style: const TextStyle(color: Colors.white70, fontSize: 14),
-              textAlign: TextAlign.center,
-            ),
-          ],
+    return Column(
+      children: [
+        Icon(icon, color: Colors.white24, size: 80),
+        const SizedBox(height: 16),
+        Text(
+          message,
+          style: const TextStyle(color: Colors.white70, fontSize: 14),
+          textAlign: TextAlign.center,
         ),
-      ),
+      ],
     );
   }
 
-  Widget _buildHistoryCard(
-      BuildContext context, String imagePath, bool isLocked) {
-    return GestureDetector(
-      onTap: () {
-        if (isLocked) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const PlusScreen()),
-          );
-          return;
-        }
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VideoDetailScreen(
-              videoTitle: "History Video",
-              videoDate: "12-04-2025",
-              videoDuration: "10:34 Mins",
-              videoDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              mainVideoThumbnail: imagePath,
-              relatedVideos: [],
-            ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(right: 12.0),
-        child: ClipRRect(
+  Widget _buildHistoryCard(BuildContext context, String imagePath, bool locked) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 12),
+      child: Material(
+        color: Colors.white12,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          child: Container(
-            width: 110,
-            height: 160,
-            color: Colors.white12,
+          splashColor: Colors.orange.withOpacity(0.25),
+          onTap: () {
+            if (locked) {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const PlusScreen()));
+              return;
+            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => VideoDetailScreen(
+                  videoTitle: "History Video",
+                  videoDate: "12-04-2025",
+                  videoDuration: "10:34 Mins",
+                  videoDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                  mainVideoThumbnail: imagePath,
+                  relatedVideos: [],
+                ),
+              ),
+            );
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
             child: Stack(
-              fit: StackFit.expand,
               children: [
                 Image.asset(
                   imagePath,
+                  width: 110,
+                  height: 160,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Center(
-                        child: Icon(Icons.image_not_supported,
-                            color: Colors.white24));
-                  },
                 ),
-                if (isLocked)
+                if (locked)
                   Container(
-                    color: Colors.black.withOpacity(0.5),
+                    width: 110,
+                    height: 160,
+                    color: Colors.black.withOpacity(0.55),
                     child: const Center(
-                      child: Icon(
-                        Icons.lock,
-                        color: Colors.white,
-                        size: 40,
-                      ),
+                      child: Icon(Icons.lock, color: Colors.white, size: 40),
                     ),
                   ),
               ],

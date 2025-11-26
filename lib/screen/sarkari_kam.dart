@@ -17,33 +17,24 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
 
   void _onItemTapped(int index) {
     if (index == _selectedIndex) return;
-
     setState(() => _selectedIndex = index);
 
     switch (index) {
       case 0:
         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const SarkariKamScreen()),
-        );
+            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
         break;
       case 1:
         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const PlusScreen()),
-        );
+            context, MaterialPageRoute(builder: (_) => const PlusScreen()));
         break;
       case 2:
         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const TrendingScreen()),
-        );
+            context, MaterialPageRoute(builder: (_) => const TrendingScreen()));
         break;
       case 3:
         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MyLibraryScreen()),
-        );
+            context, MaterialPageRoute(builder: (_) => const MyLibraryScreen()));
         break;
     }
   }
@@ -73,12 +64,21 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
-          ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () {},
+              splashColor: Colors.white24,
+              child: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Icon(Icons.search, color: Colors.white),
+              ),
+            ),
+          )
         ],
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -108,7 +108,9 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
                 },
               ),
             ),
+
             const SizedBox(height: 20),
+
             const Row(
               children: [
                 Icon(Icons.local_fire_department, color: Colors.orange),
@@ -122,7 +124,9 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
                 ),
               ],
             ),
+
             const SizedBox(height: 12),
+
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -134,53 +138,59 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
               ),
               itemCount: videos.length,
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoDetailScreen(
-                          videoTitle: videos[index],
-                          videoDate: "12-04-2025",
-                          videoDuration: "10:34 Mins",
-                          videoDescription:
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                          mainVideoThumbnail:
-                          'assets/thumbnail${index % 4 + 1}.png',
-                          relatedVideos: [],
+                return Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    splashColor: Colors.white24,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => VideoDetailScreen(
+                            videoTitle: videos[index],
+                            videoDate: "12-04-2025",
+                            videoDuration: "10:34 Mins",
+                            videoDescription:
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            mainVideoThumbnail:
+                            'assets/thumbnail${index % 4 + 1}.png',
+                            relatedVideos: [],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/thumbnail${index % 4 + 1}.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/thumbnail${index % 4 + 1}.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Stack(
-                      children: [
-                        if (index % 3 == 0)
-                          const Center(
-                            child: Icon(Icons.lock,
-                                size: 40, color: Colors.white),
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Icon(
+                              index % 3 == 0
+                                  ? Icons.lock
+                                  : Icons.play_circle_fill,
+                              size: 40,
+                              color: Colors.white,
+                            ),
                           )
-                        else
-                          const Center(
-                            child: Icon(Icons.play_circle_fill,
-                                size: 40, color: Colors.white),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
               },
             ),
+
             const SizedBox(height: 30),
+
             const Text(
               "Only On Seekho",
               style: TextStyle(
@@ -188,70 +198,76 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
+
             const SizedBox(height: 12),
+
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 4,
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoDetailScreen(
-                          videoTitle: "License Kesy Banwaye",
-                          videoDate: "12-04-2025",
-                          videoDuration: "10:34 Mins",
-                          videoDescription:
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                          mainVideoThumbnail: 'assets/license.png',
-                          relatedVideos: [],
+                return Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashColor: Colors.white24,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => VideoDetailScreen(
+                            videoTitle: "License Kesy Banwaye",
+                            videoDate: "12-04-2025",
+                            videoDuration: "10:34 Mins",
+                            videoDescription:
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            mainVideoThumbnail: 'assets/license.png',
+                            relatedVideos: [],
+                          ),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      contentPadding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'assets/license.png',
+                          width: 80,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    );
-                  },
-                  child: ListTile(
-                    contentPadding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/license.png',
-                        width: 80,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    title: const Text(
-                      "License Kesy Banwaye",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 4),
-                        Text("12-04-2025",
-                            style: TextStyle(color: Colors.white70)),
-                        SizedBox(height: 2),
-                        Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing",
-                            style:
-                            TextStyle(color: Colors.white54, fontSize: 12)),
-                      ],
-                    ),
-                    trailing: Container(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Text(
-                        "YouTube",
+                      title: const Text(
+                        "License Kesy Banwaye",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12),
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 4),
+                          Text("12-04-2025",
+                              style: TextStyle(color: Colors.white70)),
+                          SizedBox(height: 2),
+                          Text(
+                              "Lorem ipsum dolor sit amet, consectetur adipiscing",
+                              style: TextStyle(
+                                  color: Colors.white54, fontSize: 12)),
+                        ],
+                      ),
+                      trailing: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Text(
+                          "YouTube",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
+                        ),
                       ),
                     ),
                   ),
@@ -261,6 +277,7 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
           ],
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         type: BottomNavigationBarType.fixed,
@@ -270,7 +287,8 @@ class _SarkariKamScreenState extends State<SarkariKamScreen> {
         onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: "Plus"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle), label: "Plus"),
           BottomNavigationBarItem(
               icon: Icon(Icons.trending_up), label: "Trending"),
           BottomNavigationBarItem(

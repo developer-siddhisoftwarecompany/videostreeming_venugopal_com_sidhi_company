@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 import 'sarkari_kam.dart';
 import 'plus_screen.dart';
 import 'trending_section.dart';
@@ -8,6 +10,7 @@ import 'my_library_screen.dart';
 import 'video_detail_screen.dart';
 import 'search_screen.dart';
 import 'all_categories_screen.dart';
+import 'sign_in_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,10 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       page = const MyLibraryScreen();
     }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => page),
-    ).then((_) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => page)).then((_) {
       setState(() => _selectedIndex = 0);
     });
   }
@@ -75,40 +75,54 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF0E0E10),
+
+      drawer: _buildAppDrawer(),
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: const Icon(Icons.menu, color: Colors.white),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         title: const Text(
           "Seekho",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SearchScreen()),
-              ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white12,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.search, color: Colors.white54),
-                    SizedBox(width: 12),
-                    Text(
-                      'Search',
-                      style: TextStyle(color: Colors.white54, fontSize: 16),
-                    ),
-                  ],
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(14),
+                splashColor: Colors.orange.withOpacity(0.2),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const SearchScreen()));
+                },
+                child: Container(
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white12,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.search, color: Colors.white54),
+                      SizedBox(width: 12),
+                      Text('Search',
+                          style:
+                          TextStyle(color: Colors.white54, fontSize: 16)),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -124,38 +138,35 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               itemCount: categories.length,
               itemBuilder: (context, index) {
-                final category = categories[index];
-                final title = category['title'] as String;
-                final image = category['image'] as String;
+                final item = categories[index];
 
-                return GestureDetector(
-                  onTap: () {
-                    if (title == 'Sarkari Kaam') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SarkariKamScreen()),
-                      );
-                    } else if (title == 'View All') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const AllCategoriesScreen()),
-                      );
-                    }
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white12,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                return Material(
+                  color: Colors.white12,
+                  borderRadius: BorderRadius.circular(16),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    splashColor: Colors.orange.withOpacity(0.25),
+                    onTap: () {
+                      if (item['title'] == 'Sarkari Kaam') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const SarkariKamScreen()));
+                      } else if (item['title'] == 'View All') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const AllCategoriesScreen()));
+                      }
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(image, height: 40, width: 40, fit: BoxFit.contain),
+                        SvgPicture.asset(item['image']!, height: 40, width: 40),
                         const SizedBox(height: 6),
-                        Text(
-                          title,
-                          style: const TextStyle(color: Colors.white70, fontSize: 13),
-                        ),
+                        Text(item['title']!,
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 13)),
                       ],
                     ),
                   ),
@@ -175,12 +186,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: const Color(0xFF0E0E10),
         color: const Color(0xFF18181B),
         buttonBackgroundColor: Colors.orange,
         height: 70,
-        items: const <Widget>[
+        items: const [
           Icon(Icons.home, size: 30, color: Colors.white),
           Icon(Icons.add_box, size: 30, color: Colors.white),
           Icon(CupertinoIcons.flame_fill, size: 30, color: Colors.white),
@@ -201,49 +213,147 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: videos.length,
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => VideoDetailScreen(
-                    videoTitle: "$titlePrefix ${index + 1}",
-                    videoDate: "10-10-2025",
-                    videoDuration: "12:30 Mins",
-                    videoDescription:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                    mainVideoThumbnail: videos[index],
-                    relatedVideos: [
-                      {
-                        'thumbnail': 'assets/sarkari1.png',
-                        'title': 'Related Video 1',
-                        'date': '12-04-2025',
-                        'duration': '20:28'
-                      },
-                      {
-                        'thumbnail': 'assets/sarkari2.png',
-                        'title': 'Related Video 2',
-                        'date': '10-03-2025',
-                        'duration': '15:30'
-                      },
-                    ],
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12),
+              splashColor: Colors.orange.withOpacity(0.25),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => VideoDetailScreen(
+                      videoTitle: "$titlePrefix ${index + 1}",
+                      videoDate: "10-10-2025",
+                      videoDuration: "12:30 Mins",
+                      videoDescription:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                      mainVideoThumbnail: videos[index],
+                      relatedVideos: [
+                        {
+                          'thumbnail': 'assets/sarkari1.png',
+                          'title': 'Related Video 1',
+                          'date': '12-04-2025',
+                          'duration': '20:28'
+                        },
+                        {
+                          'thumbnail': 'assets/sarkari2.png',
+                          'title': 'Related Video 2',
+                          'date': '10-03-2025',
+                          'duration': '15:30'
+                        },
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-            child: Container(
-              width: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white12,
-                image: DecorationImage(
-                  image: AssetImage(videos[index]),
-                  fit: BoxFit.cover,
+                );
+              },
+              child: Container(
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                      image: AssetImage(videos[index]), fit: BoxFit.cover),
                 ),
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Drawer _buildAppDrawer() {
+    return Drawer(
+      backgroundColor: const Color(0xFF1C1C1E),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            color: const Color(0xFF2C2C2E),
+            padding: const EdgeInsets.only(left: 20, bottom: 30, top: 60),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 32,
+                  backgroundColor: Colors.orange,
+                  child: const Icon(Icons.person,
+                      color: Colors.white, size: 40),
+                ),
+                const SizedBox(width: 16),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Seekho User",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18)),
+                    Text("user@gmail.com",
+                        style: TextStyle(color: Colors.white70, fontSize: 13)),
+                  ],
+                )
+              ],
+            ),
+          ),
+
+          _drawerItem(Icons.home, "Home", () {
+            Navigator.pop(context);
+          }),
+
+          _drawerItem(Icons.search, "Search", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const SearchScreen()));
+          }),
+
+          _drawerItem(Icons.category, "All Categories", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const AllCategoriesScreen()));
+          }),
+
+          _drawerItem(Icons.favorite, "Saved Videos", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MyLibraryScreen()));
+          }),
+
+          _drawerItem(Icons.history, "Watch History", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MyLibraryScreen()));
+          }),
+
+          _drawerItem(Icons.settings, "Settings", () {}),
+
+          _drawerItem(Icons.help_outline, "Help & Support", () {}),
+
+          const Spacer(),
+
+          _drawerItem(Icons.logout, "Logout", () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => const SignInScreen()));
+          }),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  Widget _drawerItem(IconData icon, String title, VoidCallback onTap) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: Colors.white24,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+          child: Row(
+            children: [
+              Icon(icon, color: Colors.white70, size: 22),
+              const SizedBox(width: 20),
+              Text(title,
+                  style: const TextStyle(color: Colors.white, fontSize: 15)),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -261,24 +371,21 @@ class SectionTitle extends StatelessWidget {
       mainAxisAlignment:
       viewAll ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-        ),
+        Text(title,
+            style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18)),
         if (viewAll)
           TextButton(
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AllCategoriesScreen()),
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const AllCategoriesScreen()));
             },
-            child: const Text(
-              "View All →",
-              style: TextStyle(color: Colors.orange, fontSize: 14),
-            ),
+            child: const Text("View All →",
+                style: TextStyle(color: Colors.orange, fontSize: 14)),
           ),
       ],
     );

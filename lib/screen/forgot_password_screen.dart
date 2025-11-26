@@ -8,13 +8,20 @@ class ForgotPasswordScreen extends StatelessWidget {
     final emailController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0E0E0E), // Dark background
+      backgroundColor: const Color(0xFF0E0E0E),
       appBar: AppBar(
         backgroundColor: const Color(0xFF0E0E0E),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            onTap: () => Navigator.pop(context),
+            child: const Padding(
+              padding: EdgeInsets.all(10),
+              child: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            ),
+          ),
         ),
       ),
       body: Padding(
@@ -74,20 +81,24 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            Center(
-              child: SizedBox(
-                width: 343,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFF97316),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.orange.withOpacity(0.3),
+                highlightColor: Colors.orange.withOpacity(0.15),
+                onTap: () {
+                  Navigator.pushNamed(context, '/otp');
+                },
+                child: Container(
+                  width: 343,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF97316),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/otp');
-                  },
+                  alignment: Alignment.center,
                   child: const Text(
                     "SEND OTP",
                     style: TextStyle(

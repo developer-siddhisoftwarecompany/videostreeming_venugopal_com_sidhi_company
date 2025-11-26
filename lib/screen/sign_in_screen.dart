@@ -46,7 +46,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   const SizedBox(height: 40),
 
-                  // Email field
                   TextField(
                     controller: emailController,
                     style: const TextStyle(color: Colors.white),
@@ -64,7 +63,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Password field
                   TextField(
                     controller: passController,
                     obscureText: _obscureText,
@@ -79,9 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           color: Colors.white70,
                         ),
                         onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
+                          setState(() => _obscureText = !_obscureText);
                         },
                       ),
                       filled: true,
@@ -99,21 +95,24 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   const SizedBox(height: 12),
 
-                  // Forgot / Reset password link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Forgot your password? ",
-                        style: TextStyle(color: Colors.white70),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, '/forgot'),
-                        child: const Text(
-                          "Reset it",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                      const Text("Forgot your password? ", style: TextStyle(color: Colors.white70)),
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          splashColor: Colors.white24,
+                          onTap: () => Navigator.pushNamed(context, '/forgot'),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                            child: Text(
+                              "Reset it",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -122,28 +121,28 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   const SizedBox(height: 30),
 
-                  // ✅ Sign In Button with navigation
                   Center(
-                    child: SizedBox(
-                      width: 343,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFF97316),
-                          shape: RoundedRectangleBorder(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(30),
+                        splashColor: Colors.white24,
+                        onTap: () => Navigator.pushReplacementNamed(context, '/home'),
+                        child: Container(
+                          height: 50,
+                          width: 343,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF97316),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                        ),
-                        onPressed: () {
-                          // ✅ Navigate to Home Screen after login
-                          Navigator.pushReplacementNamed(context, '/home');
-                        },
-                        child: const Text(
-                          "SIGN IN",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.white,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "SIGN IN",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

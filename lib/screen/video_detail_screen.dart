@@ -25,9 +25,17 @@ class VideoDetailScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            splashColor: Colors.white24,
+            onTap: () => Navigator.pop(context),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            ),
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -41,50 +49,43 @@ class VideoDetailScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     videoTitle,
                     style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Text(
                         videoDate,
-                        style: const TextStyle(
-                            color: Colors.white70, fontSize: 13),
+                        style:
+                        const TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                       const SizedBox(width: 8),
-                      const Text(
-                        '|',
-                        style:
-                        TextStyle(color: Colors.white70, fontSize: 13),
-                      ),
+                      const Text("|",
+                          style: TextStyle(
+                              color: Colors.white70, fontSize: 13)),
                       const SizedBox(width: 8),
                       Text(
                         videoDuration,
-                        style: const TextStyle(
-                            color: Colors.white70, fontSize: 13),
+                        style:
+                        const TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      Expanded(
-                        child: _buildPlayButton(),
-                      ),
+                      Expanded(child: _buildPlayButton()),
                       const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildShareButton(),
-                      ),
+                      Expanded(child: _buildShareButton()),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -126,56 +127,58 @@ class VideoDetailScreen extends StatelessWidget {
   }
 
   Widget _buildPlayButton() {
-    return InkWell(
-      onTap: () {},
-      borderRadius: BorderRadius.circular(30),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: Colors.orange,
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.play_arrow, color: Colors.white),
-            SizedBox(width: 6),
-            Text(
-              "Play Now",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(30),
+        splashColor: Colors.white24,
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+              color: Colors.orange, borderRadius: BorderRadius.circular(30)),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.play_arrow, color: Colors.white),
+              SizedBox(width: 6),
+              Text("Play Now",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildShareButton() {
-    return InkWell(
-      onTap: () {},
-      borderRadius: BorderRadius.circular(30),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: const Color(0xFF2C2C2C),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.share_outlined, color: Colors.white, size: 20),
-            SizedBox(width: 6),
-            Text(
-              "Share",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(30),
+        splashColor: Colors.white24,
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: const Color(0xFF2C2C2C),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.share_outlined, color: Colors.white, size: 20),
+              SizedBox(width: 6),
+              Text("Share",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
         ),
       ),
     );
@@ -183,79 +186,85 @@ class VideoDetailScreen extends StatelessWidget {
 
   Widget _buildRelatedVideoCard(
       String thumbnail, String title, String date, String duration) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Stack(
-              children: [
-                Image.asset(
-                  thumbnail,
-                  width: 140,
-                  height: 90,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        splashColor: Colors.white24,
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      thumbnail,
                       width: 140,
                       height: 90,
-                      color: Colors.white12,
-                      child: const Center(
-                          child: Icon(Icons.image_not_supported,
-                              color: Colors.white24, size: 30)),
-                    );
-                  },
-                ),
-                Positioned(
-                  bottom: 5,
-                  right: 5,
-                  child: Container(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(153, 0, 0, 0),
-                        borderRadius: BorderRadius.circular(4)),
-                    child: Text(
-                      duration,
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: 140,
+                          height: 90,
+                          color: Colors.white12,
+                          child: const Center(
+                            child: Icon(Icons.image_not_supported,
+                                color: Colors.white24, size: 30),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                )
-              ],
-            ),
+                    Positioned(
+                      bottom: 5,
+                      right: 5,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(duration,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 10)),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 6),
+                    Text(date,
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 12)),
+                    const SizedBox(height: 6),
+                    const Text(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                      style: TextStyle(color: Colors.white54, fontSize: 12),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  date,
-                  style: const TextStyle(color: Colors.white70, fontSize: 12),
-                ),
-                const SizedBox(height: 6),
-                const Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                  style: TextStyle(color: Colors.white54, fontSize: 12),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
