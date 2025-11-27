@@ -112,7 +112,9 @@ class MyApp extends StatelessWidget {
       },
 
       onUnknownRoute: (settings) => MaterialPageRoute(
-        builder: (context) => const Scaffold(
+        builder: (context) => const //
+
+        Scaffold(
           body: Center(
             child: Text(
               'Page not found 🧐',
